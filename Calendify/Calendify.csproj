@@ -8,4 +8,11 @@
         <UseWPF>true</UseWPF>
     </PropertyGroup>
 
+    <ItemGroup>
+      <PackageReference Include="Google.Apis" Version="1.68.0" />
+      <PackageReference Include="Google.Apis.Calendar.v3" Version="1.68.0.3536" />
+      <PackageReference Include="Google.Apis.Oauth2.v2" Version="1.68.0.1869" />
+      <PackageReference Include="WPF-UI" Version="4.0.0-rc.2" />
+    </ItemGroup>
+
 </Project>
