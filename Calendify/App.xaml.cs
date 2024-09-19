@@ -1,4 +1,5 @@
 ﻿using System.Windows;
+using Calendify.client;
 
 namespace Calendify;
 
@@ -7,4 +8,14 @@ namespace Calendify;
 /// </summary>
 public partial class App
 {
+    public App()
+    {
+        OAuthService.AuthenticateUsers();     
+        Exit += OnExit;
+    }
+
+    private static void OnExit(object sender, ExitEventArgs e)
+    {
+        OAuthService.SaveUsers();
+    }
 }
