@@ -10,5 +10,6 @@ public partial class MainWindow
     public MainWindow()
     {
         InitializeComponent();
+        ThemeManager.ChangeTheme(ThemeManager.GetSystemTheme());
     }
 }

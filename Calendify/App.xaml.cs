@@ -1,5 +1,6 @@
 ﻿using System.Windows;
 using Calendify.client;
+using Wpf.Ui;
 
 namespace Calendify;
 
@@ -10,7 +11,7 @@ public partial class App
 {
     public App()
     {
-        OAuthService.AuthenticateUsers();     
+        OAuthService.AuthenticateUsers();
         Exit += OnExit;
     }
 
