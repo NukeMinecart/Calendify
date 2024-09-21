@@ -3,20 +3,35 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:Calendify"
+        xmlns:local="clr-namespace:Calendify.controls"
         xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml"
         mc:Ignorable="d"
         Title="MainWindow">
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition />
+            <RowDefinition Height="Auto"/>
             <RowDefinition />
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition />
+            <ColumnDefinition Width="*"/>
             <ColumnDefinition />
         </Grid.ColumnDefinitions>
         
-        <ui:TitleBar Grid.Column="1" Background="{ui:ThemeResource ControlFillColorDefault}"/>
+        <TextBlock Text="Calendify" Padding="8"/>
+        <ui:TitleBar Grid.Row="0" Grid.Column="1" />
+        
+        <Grid Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition />
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition />
+            </Grid.ColumnDefinitions>
+            
+            <Calendar IsTodayHighlighted="True"/>
+            <local:EventCalendar Grid.Row="0" Grid.Column="1" Grid.RowSpan="2" />
+        </Grid> 
     </Grid>
 </ui:FluentWindow>
