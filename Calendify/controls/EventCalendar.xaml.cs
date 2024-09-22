@@ -1,3 +1,4 @@
+using System.ComponentModel;
 using System.Windows;
 using System.Windows.Controls;
 
@@ -7,10 +8,9 @@ public class EventCalendar : Control
 {
     public static readonly DependencyProperty StartDateProperty = DependencyProperty.Register(nameof(StartDate), typeof(DateTime), typeof(EventCalendar));
     
-    public DateTime? StartDate
+    public DateTime StartDate
     {
-        get => (DateTime?)GetValue(StartDateProperty);
+        get => (DateTime)GetValue(StartDateProperty);
         set => SetValue(StartDateProperty, value);
     }
-
 }

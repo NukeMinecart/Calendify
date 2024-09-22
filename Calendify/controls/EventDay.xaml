@@ -3,7 +3,8 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:controls="clr-namespace:Calendify.controls"
     xmlns:syntax="http://schemas.lepo.co/wpfui/2022/xaml/syntax"
-    xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml">
+    xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml"
+    xmlns:converters="clr-namespace:Calendify.converters">
     
     <Style TargetType="{x:Type controls:EventDay}">
         <Setter Property="Focusable" Value="True" />
@@ -13,14 +14,14 @@
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type controls:EventDay}">
                     <Grid>
+                        <Grid.Resources>
+                            <converters:DateToDayConverter x:Key="DateToDayConverter" />
+                        </Grid.Resources>
                         <Grid.RowDefinitions>
                             <RowDefinition Height="Auto"/>
                             <RowDefinition />
                         </Grid.RowDefinitions>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="Auto"/>
-                            <ColumnDefinition />
-                        </Grid.ColumnDefinitions>
+                        <Label Foreground="{ui:ThemeResource AccentTextFillColorSecondaryBrush}" Content="{TemplateBinding Date, Converter={StaticResource DateToDayConverter}}" />
                     </Grid>
                 </ControlTemplate>
             </Setter.Value>

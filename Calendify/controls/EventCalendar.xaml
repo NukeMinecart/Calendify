@@ -3,16 +3,17 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:controls="clr-namespace:Calendify.controls"
     xmlns:syntax="http://schemas.lepo.co/wpfui/2022/xaml/syntax"
-    xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml">
+    xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml"
+    xmlns:converters="clr-namespace:Calendify.converters">
     
-    <Style TargetType="{x:Type controls:EventCalendar}">
-        <Setter Property="Focusable" Value="False" />
-        <Setter Property="SnapsToDevicePixels" Value="True" />
-        <Setter Property="OverridesDefaultStyle" Value="False" />
+    <Style TargetType="{x:Type controls:EventCalendar}" >
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type controls:EventCalendar}">
-                    <Grid Margin="8">
+                    <Grid Margin="8" x:Name="CalendarGrid">
+                        <Grid.Resources>
+                            <converters:DateToNextDayDateConverter x:Key="DateToNextDayDateConverter" />
+                        </Grid.Resources>
                         <Grid.RowDefinitions>
                             <RowDefinition Height="Auto"/>
                             <RowDefinition Height="*"/>
@@ -30,6 +31,7 @@
                             <ColumnDefinition Width="*"/>
                             <ColumnDefinition Width="*"/>
                         </Grid.ColumnDefinitions>
+                        
                         <Label Grid.Row="0" Grid.Column="0" HorizontalAlignment="Center" Content="Sunday"/>
                         <Label Grid.Row="0" Grid.Column="1" HorizontalAlignment="Center" Content="Monday"/>
                         <Label Grid.Row="0" Grid.Column="2" HorizontalAlignment="Center" Content="Tuesday"/>
@@ -46,6 +48,47 @@
                         <Border Grid.Row="1" Grid.RowSpan="5" Grid.Column="2" BorderBrush="{ui:ThemeResource ControlStrokeColorDefaultBrush}" BorderThickness="1" />
                         <Border Grid.Row="1" Grid.RowSpan="5" Grid.Column="4" BorderBrush="{ui:ThemeResource ControlStrokeColorDefaultBrush}" BorderThickness="1" />
                         <Border Grid.Row="1" Grid.RowSpan="5" Grid.Column="6" BorderBrush="{ui:ThemeResource ControlStrokeColorDefaultBrush}" BorderThickness="1" />
+                        
+                        <controls:EventDay Grid.Row="1" Grid.Column="0" HorizontalAlignment="Center" Padding="8" Date="{TemplateBinding StartDate, Converter={StaticResource DateToNextDayDateConverter}, ConverterParameter=0}"/>
+                        <controls:EventDay Grid.Row="1" Grid.Column="1" HorizontalAlignment="Center" Padding="8" Date="{TemplateBinding StartDate, Converter={StaticResource DateToNextDayDateConverter}, ConverterParameter=1}"/>
+                        <controls:EventDay Grid.Row="1" Grid.Column="2" HorizontalAlignment="Center" Padding="8" Date="{TemplateBinding StartDate, Converter={StaticResource DateToNextDayDateConverter}, ConverterParameter=2}"/>
+                        <controls:EventDay Grid.Row="1" Grid.Column="3" HorizontalAlignment="Center" Padding="8" Date="{TemplateBinding StartDate, Converter={StaticResource DateToNextDayDateConverter}, ConverterParameter=3}"/>
+                        <controls:EventDay Grid.Row="1" Grid.Column="4" HorizontalAlignment="Center" Padding="8" Date="{TemplateBinding StartDate, Converter={StaticResource DateToNextDayDateConverter}, ConverterParameter=4}"/>
+                        <controls:EventDay Grid.Row="1" Grid.Column="5" HorizontalAlignment="Center" Padding="8" Date="{TemplateBinding StartDate, Converter={StaticResource DateToNextDayDateConverter}, ConverterParameter=5}"/>
+                        <controls:EventDay Grid.Row="1" Grid.Column="6" HorizontalAlignment="Center" Padding="8" Date="{TemplateBinding StartDate, Converter={StaticResource DateToNextDayDateConverter}, ConverterParameter=6}"/>
+
+                        <controls:EventDay Grid.Row="2" Grid.Column="0" HorizontalAlignment="Center" Padding="8" Date="{TemplateBinding StartDate, Converter={StaticResource DateToNextDayDateConverter}, ConverterParameter=7}"/>
+                        <controls:EventDay Grid.Row="2" Grid.Column="1" HorizontalAlignment="Center" Padding="8" Date="{TemplateBinding StartDate, Converter={StaticResource DateToNextDayDateConverter}, ConverterParameter=8}"/>
+                        <controls:EventDay Grid.Row="2" Grid.Column="2" HorizontalAlignment="Center" Padding="8" Date="{TemplateBinding StartDate, Converter={StaticResource DateToNextDayDateConverter}, ConverterParameter=9}"/>
+                        <controls:EventDay Grid.Row="2" Grid.Column="3" HorizontalAlignment="Center" Padding="8" Date="{TemplateBinding StartDate, Converter={StaticResource DateToNextDayDateConverter}, ConverterParameter=10}"/>
+                        <controls:EventDay Grid.Row="2" Grid.Column="4" HorizontalAlignment="Center" Padding="8" Date="{TemplateBinding StartDate, Converter={StaticResource DateToNextDayDateConverter}, ConverterParameter=11}"/>
+                        <controls:EventDay Grid.Row="2" Grid.Column="5" HorizontalAlignment="Center" Padding="8" Date="{TemplateBinding StartDate, Converter={StaticResource DateToNextDayDateConverter}, ConverterParameter=12}"/>
+                        <controls:EventDay Grid.Row="2" Grid.Column="6" HorizontalAlignment="Center" Padding="8" Date="{TemplateBinding StartDate, Converter={StaticResource DateToNextDayDateConverter}, ConverterParameter=13}"/>
+
+                        <controls:EventDay Grid.Row="3" Grid.Column="0" HorizontalAlignment="Center" Padding="8" Date="{TemplateBinding StartDate, Converter={StaticResource DateToNextDayDateConverter}, ConverterParameter=14}"/>
+                        <controls:EventDay Grid.Row="3" Grid.Column="1" HorizontalAlignment="Center" Padding="8" Date="{TemplateBinding StartDate, Converter={StaticResource DateToNextDayDateConverter}, ConverterParameter=15}"/>
+                        <controls:EventDay Grid.Row="3" Grid.Column="2" HorizontalAlignment="Center" Padding="8" Date="{TemplateBinding StartDate, Converter={StaticResource DateToNextDayDateConverter}, ConverterParameter=16}"/>
+                        <controls:EventDay Grid.Row="3" Grid.Column="3" HorizontalAlignment="Center" Padding="8" Date="{TemplateBinding StartDate, Converter={StaticResource DateToNextDayDateConverter}, ConverterParameter=17}"/>
+                        <controls:EventDay Grid.Row="3" Grid.Column="4" HorizontalAlignment="Center" Padding="8" Date="{TemplateBinding StartDate, Converter={StaticResource DateToNextDayDateConverter}, ConverterParameter=18}"/>
+                        <controls:EventDay Grid.Row="3" Grid.Column="5" HorizontalAlignment="Center" Padding="8" Date="{TemplateBinding StartDate, Converter={StaticResource DateToNextDayDateConverter}, ConverterParameter=19}"/>
+                        <controls:EventDay Grid.Row="3" Grid.Column="6" HorizontalAlignment="Center" Padding="8" Date="{TemplateBinding StartDate, Converter={StaticResource DateToNextDayDateConverter}, ConverterParameter=20}"/>
+
+                        <controls:EventDay Grid.Row="4" Grid.Column="0" HorizontalAlignment="Center" Padding="8" Date="{TemplateBinding StartDate, Converter={StaticResource DateToNextDayDateConverter}, ConverterParameter=21}"/>
+                        <controls:EventDay Grid.Row="4" Grid.Column="1" HorizontalAlignment="Center" Padding="8" Date="{TemplateBinding StartDate, Converter={StaticResource DateToNextDayDateConverter}, ConverterParameter=22}"/>
+                        <controls:EventDay Grid.Row="4" Grid.Column="2" HorizontalAlignment="Center" Padding="8" Date="{TemplateBinding StartDate, Converter={StaticResource DateToNextDayDateConverter}, ConverterParameter=23}"/>
+                        <controls:EventDay Grid.Row="4" Grid.Column="3" HorizontalAlignment="Center" Padding="8" Date="{TemplateBinding StartDate, Converter={StaticResource DateToNextDayDateConverter}, ConverterParameter=24}"/>
+                        <controls:EventDay Grid.Row="4" Grid.Column="4" HorizontalAlignment="Center" Padding="8" Date="{TemplateBinding StartDate, Converter={StaticResource DateToNextDayDateConverter}, ConverterParameter=25}"/>
+                        <controls:EventDay Grid.Row="4" Grid.Column="5" HorizontalAlignment="Center" Padding="8" Date="{TemplateBinding StartDate, Converter={StaticResource DateToNextDayDateConverter}, ConverterParameter=26}"/>
+                        <controls:EventDay Grid.Row="4" Grid.Column="6" HorizontalAlignment="Center" Padding="8" Date="{TemplateBinding StartDate, Converter={StaticResource DateToNextDayDateConverter}, ConverterParameter=27}"/>
+
+                        <controls:EventDay Grid.Row="5" Grid.Column="0" HorizontalAlignment="Center" Padding="8" Date="{TemplateBinding StartDate, Converter={StaticResource DateToNextDayDateConverter}, ConverterParameter=28}"/>
+                        <controls:EventDay Grid.Row="5" Grid.Column="1" HorizontalAlignment="Center" Padding="8" Date="{TemplateBinding StartDate, Converter={StaticResource DateToNextDayDateConverter}, ConverterParameter=29}"/>
+                        <controls:EventDay Grid.Row="5" Grid.Column="2" HorizontalAlignment="Center" Padding="8" Date="{TemplateBinding StartDate, Converter={StaticResource DateToNextDayDateConverter}, ConverterParameter=30}"/>
+                        <controls:EventDay Grid.Row="5" Grid.Column="3" HorizontalAlignment="Center" Padding="8" Date="{TemplateBinding StartDate, Converter={StaticResource DateToNextDayDateConverter}, ConverterParameter=31}"/>
+                        <controls:EventDay Grid.Row="5" Grid.Column="4" HorizontalAlignment="Center" Padding="8" Date="{TemplateBinding StartDate, Converter={StaticResource DateToNextDayDateConverter}, ConverterParameter=32}"/>
+                        <controls:EventDay Grid.Row="5" Grid.Column="5" HorizontalAlignment="Center" Padding="8" Date="{TemplateBinding StartDate, Converter={StaticResource DateToNextDayDateConverter}, ConverterParameter=33}"/>
+                        <controls:EventDay Grid.Row="5" Grid.Column="6" HorizontalAlignment="Center" Padding="8" Date="{TemplateBinding StartDate, Converter={StaticResource DateToNextDayDateConverter}, ConverterParameter=34}"/>
+
                     </Grid>
                 </ControlTemplate>
             </Setter.Value>

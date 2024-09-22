@@ -30,8 +30,8 @@
                 <ColumnDefinition />
             </Grid.ColumnDefinitions>
             
-            <Calendar IsTodayHighlighted="True"/>
-            <local:EventCalendar Grid.Row="0" Grid.Column="1" Grid.RowSpan="2" />
+            <Calendar IsTodayHighlighted="True" x:Name="SelectionCalendar" SelectedDatesChanged="DateSelectionChanged"/>
+            <local:EventCalendar x:Name="CalendarGrid" Grid.Row="0" Grid.Column="1" Grid.RowSpan="2"/>
         </Grid> 
     </Grid>
 </ui:FluentWindow>
