@@ -11,7 +11,7 @@ public partial class App
 {
     public App()
     {
-        OAuthService.AuthenticateUsers();
+        OAuthService.AuthenticateUsers().Wait();
         Exit += OnExit;
     }
 

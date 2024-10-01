@@ -15,11 +15,11 @@ public class EventCalendar : Control
         set => SetValue(StartDateProperty, value);
     }
     
-    public static readonly DependencyProperty EventsProperty = DependencyProperty.Register(nameof(Events), typeof(List<Event>), typeof(EventCalendar));
+    public static readonly DependencyProperty EventsProperty = DependencyProperty.Register(nameof(Events), typeof(Dictionary<Event, string>), typeof(EventCalendar));
     
-    public List<Event>? Events
+    public Dictionary<Event, string>? Events
     {
-        get => (List<Event>?)GetValue(EventsProperty);
+        get => (Dictionary<Event, string>?)GetValue(EventsProperty);
         set => SetValue(EventsProperty, value);
     }
 }

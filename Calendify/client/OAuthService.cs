@@ -12,17 +12,18 @@ public static class OAuthService
     public static readonly FileDataStore CalendifyDataStore =
         new (Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "/Calendify");
 
-    public static void AuthenticateUsers()
+    public static async Task AuthenticateUsers()
     {
-        var fetchUserData = CalendifyDataStore.GetAsync<HashSet<string>>("activeUsers");
-        fetchUserData.Wait();
-        ActiveUserNames = fetchUserData.Result ?? ActiveUserNames;
+        var fetchUserData = await CalendifyDataStore.GetAsync<HashSet<string>>("activeUsers");
+        ActiveUserNames = fetchUserData ?? ActiveUserNames;
 
-        foreach (var userName in ActiveUserNames)
+        foreach (var user in ActiveUserNames.Select(userName => new OAuthUser(userName)))
         {
-            ActiveUsers.Add(new OAuthUser(userName));
-            Console.WriteLine($"User: {userName}");
+            await user.AuthenticateUser();
+            ActiveUsers.Add(user);
+            await user.Credential.RefreshTokenAsync(CancellationToken.None);
         }
+        Console.WriteLine("Active users refreshed");
     }
 
     public static void SaveUsers()

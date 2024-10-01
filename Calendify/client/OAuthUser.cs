@@ -5,25 +5,18 @@ using Newtonsoft.Json;
 
 namespace Calendify.client;
 
-public class OAuthUser
+public class OAuthUser(string user)
 {
     public UserCredential? Credential { get; private set; }
 
-    private readonly string _user;
-
-    public OAuthUser(string user)
+    public async Task AuthenticateUser()
     {
-        _user = user;
-        AuthenticateUser();
-    }
-
-    private async void AuthenticateUser()
-    {
+        Console.WriteLine(user);
         await using var stream = new FileStream("client/client_secrets.json", FileMode.Open, FileAccess.Read);
         Credential = await GoogleWebAuthorizationBroker.AuthorizeAsync(
             (await GoogleClientSecrets.FromStreamAsync(stream)).Secrets,
             [CalendarService.Scope.Calendar],
-            _user, CancellationToken.None, OAuthService.CalendifyDataStore);
-        OAuthService.ActiveUserNames.Add(_user);
+            user, CancellationToken.None, OAuthService.CalendifyDataStore);
+        OAuthService.ActiveUserNames.Add(user);
     }
 }

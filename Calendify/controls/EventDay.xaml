@@ -5,7 +5,7 @@
     xmlns:syntax="http://schemas.lepo.co/wpfui/2022/xaml/syntax"
     xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml"
     xmlns:converters="clr-namespace:Calendify.converters">
-    
+
     <Style TargetType="{x:Type controls:EventDay}">
         <Setter Property="Focusable" Value="True" />
         <Setter Property="SnapsToDevicePixels" Value="False" />
@@ -16,12 +16,25 @@
                     <Grid>
                         <Grid.Resources>
                             <converters:DateToDayConverter x:Key="DateToDayConverter" />
+                            <converters:EventsToEventsDayConverter x:Key="EventsToEventsDayConverter" />
                         </Grid.Resources>
                         <Grid.RowDefinitions>
-                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto" />
                             <RowDefinition />
                         </Grid.RowDefinitions>
-                        <Label Foreground="{ui:ThemeResource AccentTextFillColorSecondaryBrush}" Content="{TemplateBinding Date, Converter={StaticResource DateToDayConverter}}" />
+                        <Label HorizontalAlignment="Center"
+                               Foreground="{ui:ThemeResource AccentTextFillColorSecondaryBrush}"
+                               Content="{TemplateBinding Date, Converter={StaticResource DateToDayConverter}}" />
+                        <ui:ListView Grid.Row="1" HorizontalAlignment="Stretch">
+                            <ListView.ItemsSource>
+                                <MultiBinding Converter="{StaticResource EventsToEventsDayConverter}">
+                                    <MultiBinding.Bindings>
+                                        <Binding Path="Events" RelativeSource="{RelativeSource TemplatedParent}" />
+                                        <Binding Path="Date" RelativeSource="{RelativeSource TemplatedParent}" />
+                                    </MultiBinding.Bindings>
+                                </MultiBinding>
+                            </ListView.ItemsSource>
+                        </ui:ListView>
                     </Grid>
                 </ControlTemplate>
             </Setter.Value>

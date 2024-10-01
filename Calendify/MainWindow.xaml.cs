@@ -1,10 +1,12 @@
-﻿using System.IO;
+﻿using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Documents;
+using Calendify.calendar;
 using Google.Apis.Calendar.v3;
-using Google.Apis.Services;
-using Newtonsoft.Json;
+using Google.Apis.Calendar.v3.Data;
+using Wpf.Ui.Controls;
 using Calendar = System.Windows.Controls.Calendar;
-
+using GoogleCalendar = Google.Apis.Calendar.v3.Data.Calendar;
 namespace Calendify;
 
 /// <summary>
@@ -17,25 +19,30 @@ public partial class MainWindow
         InitializeComponent();
         ThemeManager.ChangeTheme(ThemeManager.GetSystemTheme());
         SelectionCalendar.SelectedDate = DateTime.Today;
-        var calendarServiceInitializer = new BaseClientService.Initializer()
+        var calendarListResult = CalendarRequestService.MakeRequest<CalendarListResource.ListRequest, CalendarList>(CalendarRequestService.Service.CalendarList.List());
+        var eventColorMap = new Dictionary<Event, string>();
+        foreach (var calendar in calendarListResult.Items)
         {
-            ApplicationName = "Calendify",
-        };
-        JsonReader reader = new JsonTextReader(new StreamReader(new FileStream("client/client_secrets.json", FileMode.Open)));
-        reader.Read();
-        reader.Skip();
-        Console.Write(reader.ReadAsString());
-        
-        var calendarService = new CalendarService(calendarServiceInitializer);
+            var events = new List<Event>();
+            var getEventList = CalendarRequestService.MakeRequest<EventsResource.ListRequest, Events>(CalendarRequestService.Service.Events.List(calendar.Id));
+            var repeatEvents = getEventList.Items.Where(@event => @event.Recurrence is { Count: > 0 }).ToList();
+            repeatEvents.ForEach(repeatEvent => events.AddRange(CalendarRequestService
+                .MakeRequest<EventsResource.InstancesRequest, Events>(
+                    CalendarRequestService.Service.Events.Instances(calendar.Id, repeatEvent.Id)).Items));
+            events.AddRange(getEventList.Items);
+            events.ForEach(@event => eventColorMap.Add(@event, calendar.ColorId));
+        }
+
+        CalendarGrid.Events = eventColorMap;
+
     }
 
 
     private void DateSelectionChanged(object sender, SelectionChangedEventArgs e)
     {
-        //TODO change this to a value converter
         var date = (sender as Calendar)!.SelectedDate!.Value;
-        var dayOfWeek = (int)date.DayOfWeek;
-        
-        CalendarGrid.StartDate = date.AddDays(-date.Day);
+        var dayOffset = new DateTime(date.Year, date.Month, 1);
+        var dayOfWeek = (int)dayOffset.DayOfWeek;
+        CalendarGrid.StartDate = date.AddDays(-date.Day + 1 - dayOfWeek);
     }
 }
