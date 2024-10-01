@@ -1,3 +1,4 @@
+using System.Collections;
 using System.Globalization;
 using System.Windows.Controls;
 using System.Windows.Data;
@@ -11,9 +12,19 @@ public class EventsToEventsDayConverter : IMultiValueConverter
 {
     public object Convert(object[] values, Type targetType, object parameter, CultureInfo culture)
     {
-        var eventsMap = (Dictionary<Event, string>)values[0];
-        var events = eventsMap.Keys.ToList();
-        var date = (DateTime)values[1];
+        Dictionary<Event, string> eventsMap;
+        List<Event> events;
+        DateTime date;
+        try
+        {
+            eventsMap = (Dictionary<Event, string>)values[0];
+            events = eventsMap.Keys.ToList();
+            date = (DateTime)values[1];
+        }
+        catch (NullReferenceException)
+        {
+            return "";
+        }
 
         var filteredEvents = events.Where(googleEvent =>
         {

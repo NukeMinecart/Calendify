@@ -1,12 +1,10 @@
 ﻿using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Documents;
 using Calendify.calendar;
 using Google.Apis.Calendar.v3;
 using Google.Apis.Calendar.v3.Data;
-using Wpf.Ui.Controls;
 using Calendar = System.Windows.Controls.Calendar;
-using GoogleCalendar = Google.Apis.Calendar.v3.Data.Calendar;
+
 namespace Calendify;
 
 /// <summary>
@@ -19,8 +17,18 @@ public partial class MainWindow
         InitializeComponent();
         ThemeManager.ChangeTheme(ThemeManager.GetSystemTheme());
         SelectionCalendar.SelectedDate = DateTime.Today;
+        var workerThread = new Thread(RetrieveAndSetEvents)
+        {
+            Priority = ThreadPriority.AboveNormal
+        };
+        workerThread.Start();
+    }
+
+    private void RetrieveAndSetEvents()
+    {
         var calendarListResult = CalendarRequestService.MakeRequest<CalendarListResource.ListRequest, CalendarList>(CalendarRequestService.Service.CalendarList.List());
         var eventColorMap = new Dictionary<Event, string>();
+        
         foreach (var calendar in calendarListResult.Items)
         {
             var events = new List<Event>();
@@ -33,8 +41,7 @@ public partial class MainWindow
             events.ForEach(@event => eventColorMap.Add(@event, calendar.ColorId));
         }
 
-        CalendarGrid.Events = eventColorMap;
-
+        Application.Current.Dispatcher.Invoke(() => CalendarGrid.Events = eventColorMap);
     }
 
 
