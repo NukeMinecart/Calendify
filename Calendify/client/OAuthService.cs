@@ -21,7 +21,7 @@ public static class OAuthService
         {
             await user.AuthenticateUser();
             ActiveUsers.Add(user);
-            await user.Credential.RefreshTokenAsync(CancellationToken.None);
+            await user.Credential!.RefreshTokenAsync(CancellationToken.None);
         }
         Console.WriteLine("Active users refreshed");
     }

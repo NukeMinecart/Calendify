@@ -22,6 +22,8 @@ public partial class MainWindow
             Priority = ThreadPriority.AboveNormal
         };
         workerThread.Start();
+        Closed += (_, _) => workerThread.Interrupt();
+        
     }
 
     private void RetrieveAndSetEvents()
@@ -41,15 +43,10 @@ public partial class MainWindow
             events.ForEach(@event => eventColorMap.Add(@event, calendar.ColorId));
         }
 
-        Application.Current.Dispatcher.Invoke(() => CalendarGrid.Events = eventColorMap);
-    }
-
-
-    private void DateSelectionChanged(object sender, SelectionChangedEventArgs e)
-    {
-        var date = (sender as Calendar)!.SelectedDate!.Value;
-        var dayOffset = new DateTime(date.Year, date.Month, 1);
-        var dayOfWeek = (int)dayOffset.DayOfWeek;
-        CalendarGrid.StartDate = date.AddDays(-date.Day + 1 - dayOfWeek);
+        Application.Current.Dispatcher.Invoke(() =>
+        {
+            FetchRing.Visibility = Visibility.Collapsed;
+            CalendarGrid.Events = eventColorMap;
+        });
     }
 }
