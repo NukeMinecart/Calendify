@@ -12,10 +12,7 @@ public class OAuthUser(string user)
 
     public void AuthenticateUser()
     {
-        var stream = new FileStream("client/client_secrets.json", FileMode.Open, FileAccess.Read);
-        var jsonObject = JsonConvert.DeserializeObject<Root>(new StreamReader(stream).ReadToEnd());
-        var secrets = new ClientSecrets{ClientId = jsonObject!.installed.client_id, ClientSecret = jsonObject!.installed.client_secret};
-        stream.Close();
+        var secrets = new ClientSecrets{ClientId = ClientSecret.ClientId, ClientSecret = ClientSecret.ClientSecretId};
         
         var task = GoogleWebAuthorizationBroker.AuthorizeAsync(
             secrets, [CalendarService.Scope.Calendar], user,

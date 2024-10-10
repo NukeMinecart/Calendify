@@ -24,9 +24,6 @@
 
     <ItemGroup>
       <None Remove="client\client_secrets.json" />
-      <AdditionalFiles Include="client\client_secrets.json">
-        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-      </AdditionalFiles>
     </ItemGroup>
 
     <ItemGroup>
