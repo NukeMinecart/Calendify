@@ -10,9 +10,9 @@ public static class CalendarRequestService
     public static CalendarService Service { get; } = new (new BaseClientService.Initializer
         { ApplicationName = "Calendify" });
     
-    public static TReturn MakeRequest<TRequest, TReturn>(TRequest request) where TRequest : CalendarBaseServiceRequest<TReturn>
+    public static TReturn MakeRequest<TRequest, TReturn>(TRequest request, OAuthUser user) where TRequest : CalendarBaseServiceRequest<TReturn>
     {
-        request.AddCredential(OAuthService.ActiveUsers[0].Credential);
+        request.AddCredential(user.Credential);
         return request.Execute();
     }
 }

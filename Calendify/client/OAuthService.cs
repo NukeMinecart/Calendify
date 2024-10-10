@@ -5,25 +5,33 @@ namespace Calendify.client;
 
 public static class OAuthService
 {
-    public static HashSet<string> ActiveUserNames { get; private set; } = [];
-    
-    public static readonly List<OAuthUser> ActiveUsers = [];
+    public static HashSet<string>? ActiveUserNames { get; private set; }
+
+    public static List<OAuthUser> ActiveUsers { get; set; } = [];
 
     public static readonly FileDataStore CalendifyDataStore =
         new (Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "/Calendify");
-
-    public static async Task AuthenticateUsers()
+    
+    public static async Task FetchActiveUsers()
     {
         var fetchUserData = await CalendifyDataStore.GetAsync<HashSet<string>>("activeUsers");
-        ActiveUserNames = fetchUserData ?? ActiveUserNames;
-
-        foreach (var user in ActiveUserNames.Select(userName => new OAuthUser(userName)))
+        ActiveUserNames ??= fetchUserData;
+    }
+    
+    public static async Task AuthenticateUsers()
+    {
+        ActiveUsers.Clear();
+        foreach (var user in ActiveUserNames!.Select(userName => new OAuthUser(userName)))
         {
-            await user.AuthenticateUser();
+            user.AuthenticateUser();
+
+            if(user.Credential == null) continue;
+            
+            if(user.Credential.Token.IsStale)
+                Console.WriteLine(await user.Credential!.RefreshTokenAsync(CancellationToken.None));
+            
             ActiveUsers.Add(user);
-            await user.Credential!.RefreshTokenAsync(CancellationToken.None);
         }
-        Console.WriteLine("Active users refreshed");
     }
 
     public static void SaveUsers()

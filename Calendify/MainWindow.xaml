@@ -1,47 +1,49 @@
 ﻿<ui:FluentWindow x:Class="Calendify.MainWindow"
-        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:Calendify.controls"
-        xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml"
-        xmlns:converters="clr-namespace:Calendify.converters"
-        mc:Ignorable="d"
-        Title="MainWindow">
+                 xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                 xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                 xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+                 xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+                 xmlns:local="clr-namespace:Calendify.controls"
+                 xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml"
+                 xmlns:converters="clr-namespace:Calendify.converters"
+                 mc:Ignorable="d"
+                 Title="MainWindow">
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto" />
             <RowDefinition />
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="*"/>
-            <ColumnDefinition Width="Auto"/>
-            <ColumnDefinition Width="Auto"/>
-            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="Auto" />
+            <ColumnDefinition Width="Auto" />
+            <ColumnDefinition Width="Auto" />
         </Grid.ColumnDefinitions>
-        
-        <TextBlock Text="Calendify" Padding="8"/>
-        <ui:ProgressRing Grid.Row="0" Grid.Column="1" Name="FetchRing" IsIndeterminate="True" Width="20" Height="20"/>
+
+        <TextBlock Text="Calendify" Padding="8" />
+        <ProgressBar Grid.Row="0" Grid.Column="1" Maximum="100" Minimum="0" Value="0" MinWidth="100" Name="FetchBar" />
         <Menu Grid.Row="0" Grid.Column="2" MaxHeight="40">
-            <ui:MenuItem Icon="{ui:SymbolIcon PersonCircle32}" Name="PeopleItem"/>
+            <ui:MenuItem Icon="{ui:SymbolIcon PersonCircle32}" Name="PeopleItem" />
         </Menu>
-        <ui:TitleBar Grid.Row="0" Grid.Column="3"/>
-        
+        <ui:TitleBar Grid.Row="0" Grid.Column="3" />
+        <ContentPresenter x:Name="RootContentDialog" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="4" Grid.RowSpan="2" />
+
         <Grid Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="4">
             <Grid.Resources>
                 <converters:DateToDateMonthOffsetConverter x:Key="DateToDateMonthOffsetConverter" />
             </Grid.Resources>
             <Grid.RowDefinitions>
-                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto" />
                 <RowDefinition />
             </Grid.RowDefinitions>
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="Auto" />
                 <ColumnDefinition />
             </Grid.ColumnDefinitions>
-            
+
             <Calendar IsTodayHighlighted="True" x:Name="SelectionCalendar" />
-            <local:EventCalendar x:Name="CalendarGrid" Grid.Row="0" Grid.Column="1" Grid.RowSpan="2" StartDate="{Binding ElementName=SelectionCalendar, Path=SelectedDate, Converter={StaticResource DateToDateMonthOffsetConverter}}"/>
-        </Grid> 
+            <local:EventCalendar x:Name="CalendarGrid" Grid.Row="0" Grid.Column="1" Grid.RowSpan="2"
+                                 StartDate="{Binding ElementName=SelectionCalendar, Path=SelectedDate, Converter={StaticResource DateToDateMonthOffsetConverter}}" />
+        </Grid>
     </Grid>
 </ui:FluentWindow>

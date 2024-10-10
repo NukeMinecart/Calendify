@@ -9,9 +9,9 @@ namespace Calendify;
 /// </summary>
 public partial class App
 {
+
     public App()
     {
-        OAuthService.AuthenticateUsers().Wait();
         Exit += OnExit;
     }
 
