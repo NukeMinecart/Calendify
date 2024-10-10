@@ -6,7 +6,12 @@
         <Nullable>enable</Nullable>
         <ImplicitUsings>enable</ImplicitUsings>
         <UseWPF>true</UseWPF>
+        <ApplicationIcon>calendify.ico</ApplicationIcon>
     </PropertyGroup>
+
+    <ItemGroup>
+        <Content Include="calendify.ico" />
+    </ItemGroup>
 
     <ItemGroup>
       <PackageReference Include="Google.Apis" Version="1.68.0" />
